@@ -9,14 +9,20 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class Crawler {
     private final WebDriver webDriver;
-    public List<String> crawlingLinksOfPage(String url, String tag, String attr){
+    public List<String> crawlingUrl(String url, String tag, String attr){
         List<WebElement> webElements = findElements(url, tag);
-        return webElements.stream().map(it -> it.getAttribute(attr)).toList();
+        List<String> strings = new ArrayList<>();
+        for(WebElement we : webElements){
+            if(we.getAttribute(attr) == null || we.getAttribute(attr).isEmpty()) continue;
+            strings.add(we.getAttribute(attr));
+        }
+        return strings;
     }
 
     private List<WebElement> findElements(String url, String tag){

@@ -12,9 +12,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CrawlerService {
     private final Crawler crawler;
-    private final String url = "https://news.google.com/search?q=";
-    public List<String> searchGoogle(String query){
-        List<String> articleLinks = crawler.crawlingLinksOfPage(url + query, "a", "href");
+    private final String url = "https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query=";
+    public List<String> findNewsLinks(String query){
+        List<String> articleLinks = crawler.crawlingUrl(url + query, "a", "href");
         return articleLinks.stream().filter(Objects::nonNull).filter(it -> it.contains("articles")).collect(Collectors.toList());
+    }
+
+    public List<String> findNewsTitles(String query){
+        return crawler.crawlingUrl(url + query, "a", "title");
+
     }
 }
