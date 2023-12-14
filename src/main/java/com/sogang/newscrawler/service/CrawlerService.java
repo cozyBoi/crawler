@@ -6,6 +6,7 @@ import com.sogang.newscrawler.utils.Crawler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -22,13 +23,14 @@ public class CrawlerService {
     }
 
     public List<String> findNewsTitles(String query){
-        List<String> crawlingUrls = crawler.crawlingUrl(url + query, "a", "title");
-        for(String url : crawlingUrls){
-            NewsData.builder()
-                    .id("")
-                    .build();
+        List<String> crawlingTitles = crawler.crawlingUrl(url + query, "a", "title");
+        List<NewsData> newsDataDocuments = new ArrayList<>();
+        for(String title : crawlingTitles){
+            newsDataDocuments.add(NewsData.builder()
+                    .title(title)
+                    .build());
         }
-        crawlerRepository.save();
-        return crawlingUrls;
+        crawlerRepository.saveAll(newsDataDocuments);
+        return crawlingTitles;
     }
 }
