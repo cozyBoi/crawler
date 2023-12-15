@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collation = "news_title")
+@Document(collation = "newsData")
 @Getter
 @Builder
 public class NewsData {

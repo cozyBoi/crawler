@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-@EnableMongoRepositories(basePackages = "com.sogang.newscrawler.repository")
+@EnableMongoRepositories(basePackages = "com.sogang.newscrawler.repository",
+		mongoTemplateRef = "studioMongoTemplate")
 public class NewsCrawlerApplication {
 	public static void main(String[] args) {
 		System.out.println(SpringApplication.run(NewsCrawlerApplication.class, args).getBean(CrawlerService.class).findNewsTitles("테슬라"));
